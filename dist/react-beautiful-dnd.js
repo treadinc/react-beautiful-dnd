@@ -7021,25 +7021,9 @@
       });
     };
 
-    var updateDroppableScroll = function updateDroppableScroll(id, newScroll) {
-      if (!collection) {
-        return;
-      }
+    var updateDroppableScroll = function updateDroppableScroll(id, newScroll) {};
 
-      !registry.droppable.exists(id) ?  invariant(false, "Cannot update the scroll on Droppable " + id + " as it is not registered")  : void 0;
-      callbacks.updateDroppableScroll({
-        id: id,
-        newScroll: newScroll
-      });
-    };
-
-    var scrollDroppable = function scrollDroppable(id, change) {
-      if (!collection) {
-        return;
-      }
-
-      registry.droppable.getById(id).callbacks.scroll(change);
-    };
+    var scrollDroppable = function scrollDroppable(id, change) {};
 
     var stopPublishing = function stopPublishing() {
       if (!collection) {
@@ -7783,9 +7767,6 @@
       id: base + "-id"
     };
   }();
-  var scrollContainer = {
-    contextId: prefix$2 + "-scroll-container-context-id"
-  };
 
   var makeGetSelector = function makeGetSelector(context) {
     return function (attribute) {
@@ -9947,20 +9928,6 @@
     return el;
   };
 
-  var checkForNestedScrollContainers = (function (scrollable) {
-    if (!scrollable) {
-      return;
-    }
-
-    var anotherScrollParent = getClosestScrollable(scrollable.parentElement);
-
-    if (!anotherScrollParent) {
-      return;
-    }
-
-     warning("\n    Droppable: unsupported nested scroll container detected.\n    A Droppable can only have one scroll parent (which can be itself)\n    Nested scroll containers are currently not supported.\n\n    We hope to support nested scroll containers soon: https://github.com/atlassian/react-beautiful-dnd/issues/131\n  ") ;
-  });
-
   var getScroll$1 = (function (el) {
     return {
       x: el.scrollLeft,
@@ -10128,16 +10095,6 @@
     return dimension;
   });
 
-  var immediate = {
-    passive: false
-  };
-  var delayed = {
-    passive: true
-  };
-  var getListenerOptions = (function (options) {
-    return options.shouldPublishImmediately ? immediate : delayed;
-  });
-
   function useRequiredContext(Context) {
     var result = React.useContext(Context);
     !result ?  invariant(false, 'Could not find required context')  : void 0;
@@ -10225,17 +10182,6 @@
         isCombineEnabled: previous.isCombineEnabled,
         shouldClipSubject: !previous.ignoreContainerClipping
       });
-      var scrollable = env.closestScrollable;
-
-      if (scrollable) {
-        scrollable.setAttribute(scrollContainer.contextId, appContext.contextId);
-        scrollable.addEventListener('scroll', onClosestScroll, getListenerOptions(dragging.scrollOptions));
-
-        {
-          checkForNestedScrollContainers(scrollable);
-        }
-      }
-
       return dimension;
     }, [appContext.contextId, descriptor, onClosestScroll, previousRef]);
     var getScrollWhileDragging = useCallback(function () {
@@ -10247,16 +10193,7 @@
     var dragStopped = useCallback(function () {
       var dragging = whileDraggingRef.current;
       !dragging ?  invariant(false, 'Cannot stop drag when no active drag')  : void 0;
-      var closest = getClosestScrollableFromDrag(dragging);
       whileDraggingRef.current = null;
-
-      if (!closest) {
-        return;
-      }
-
-      scheduleScrollUpdate.cancel();
-      closest.removeAttribute(scrollContainer.contextId);
-      closest.removeEventListener('scroll', onClosestScroll, getListenerOptions(dragging.scrollOptions));
     }, [onClosestScroll, scheduleScrollUpdate]);
     var scroll = useCallback(function (change) {
       var dragging = whileDraggingRef.current;
