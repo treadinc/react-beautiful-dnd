@@ -150,25 +150,25 @@ export default function useDroppablePublisher(args: Props) {
         shouldClipSubject: !previous.ignoreContainerClipping,
       });
 
-      const scrollable: ?Element = env.closestScrollable;
+      // const scrollable: ?Element = env.closestScrollable;
 
-      if (scrollable) {
-        scrollable.setAttribute(
-          dataAttr.scrollContainer.contextId,
-          appContext.contextId,
-        );
+      // if (scrollable) {
+      //   scrollable.setAttribute(
+      //     dataAttr.scrollContainer.contextId,
+      //     appContext.contextId,
+      //   );
 
-        // bind scroll listener
-        scrollable.addEventListener(
-          'scroll',
-          onClosestScroll,
-          getListenerOptions(dragging.scrollOptions),
-        );
-        // print a debug warning if using an unsupported nested scroll container setup
-        if (process.env.NODE_ENV !== 'production') {
-          checkForNestedScrollContainers(scrollable);
-        }
-      }
+      //   // bind scroll listener
+      //   scrollable.addEventListener(
+      //     'scroll',
+      //     onClosestScroll,
+      //     getListenerOptions(dragging.scrollOptions),
+      //   );
+      //   // print a debug warning if using an unsupported nested scroll container setup
+      //   if (process.env.NODE_ENV !== 'production') {
+      //     checkForNestedScrollContainers(scrollable);
+      //   }
+      // }
 
       return dimension;
     },
@@ -189,23 +189,23 @@ export default function useDroppablePublisher(args: Props) {
   const dragStopped = useCallback(() => {
     const dragging: ?WhileDragging = whileDraggingRef.current;
     invariant(dragging, 'Cannot stop drag when no active drag');
-    const closest: ?Element = getClosestScrollableFromDrag(dragging);
+    // const closest: ?Element = getClosestScrollableFromDrag(dragging);
 
     // goodbye old friend
     whileDraggingRef.current = null;
 
-    if (!closest) {
-      return;
-    }
+    // if (!closest) {
+    //   return;
+    // }
 
-    // unwatch scroll
-    scheduleScrollUpdate.cancel();
-    closest.removeAttribute(dataAttr.scrollContainer.contextId);
-    closest.removeEventListener(
-      'scroll',
-      onClosestScroll,
-      getListenerOptions(dragging.scrollOptions),
-    );
+    // // unwatch scroll
+    // scheduleScrollUpdate.cancel();
+    // closest.removeAttribute(dataAttr.scrollContainer.contextId);
+    // closest.removeEventListener(
+    //   'scroll',
+    //   onClosestScroll,
+    //   getListenerOptions(dragging.scrollOptions),
+    // );
   }, [onClosestScroll, scheduleScrollUpdate]);
 
   const scroll = useCallback((change: Position) => {

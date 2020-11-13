@@ -110,23 +110,23 @@ export default (registry: Registry, callbacks: Callbacks) => {
 
   const updateDroppableScroll = (id: DroppableId, newScroll: Position) => {
     // no need to update the application state if a collection is not occurring
-    if (!collection) {
-      return;
-    }
+    // if (!collection) {
+    //   return;
+    // }
 
-    invariant(
-      registry.droppable.exists(id),
-      `Cannot update the scroll on Droppable ${id} as it is not registered`,
-    );
+    // invariant(
+    //   registry.droppable.exists(id),
+    //   `Cannot update the scroll on Droppable ${id} as it is not registered`,
+    // );
 
-    callbacks.updateDroppableScroll({ id, newScroll });
+    // callbacks.updateDroppableScroll({ id, newScroll });
   };
 
   const scrollDroppable = (id: DroppableId, change: Position) => {
-    if (!collection) {
-      return;
-    }
-    registry.droppable.getById(id).callbacks.scroll(change);
+    // if (!collection) {
+    //   return;
+    // }
+    // registry.droppable.getById(id).callbacks.scroll(change);
   };
 
   const stopPublishing = () => {
